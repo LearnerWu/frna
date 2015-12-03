@@ -8,7 +8,6 @@ var {
   Image,
   Text,
   View,
-  ListView,
   Navigator,
   StyleSheet,
 } = React;
@@ -21,6 +20,7 @@ var {
 // var DataRepository = require('./Repository');
 
 // var repository = new DataRepository();
+var headerPicUrl='http://facebook.github.io/react/img/logo_og.png';
 var _navNavigator;
 var dataCache = {
   nav: [
@@ -44,15 +44,7 @@ var dataCache = {
 
 var MainScreen = React.createClass({
   getInitialState: function() {
-    var navDataSource = new ListView.DataSource({
-      navHasChanged: (nav1, nav2) => nav1 !== nav2
-    });
-    return {
-      // isLoading: false,
-      // isLoadingTail: false,
-      navDataSource: navDataSource,
-      // headerDataSource: headerDataSource,
-    };
+    return null;
   },
 
   componentWillUnmount: function() {
@@ -72,30 +64,24 @@ var MainScreen = React.createClass({
       //         : '加载失败'}
       //     </Text>
       //   </View>:
-      // <ListView
-      // ref='MainScreen'
-      // style={styles.list}
-      // dataSource={this.state.navDataSource}
-      // renderHeader={this._renderHeader}
-      // renderRow={this._renderRow}
-      // renderFooter={this._renderFooter}
-      // />
+
+      <View style={styles.screenContainer}>
       <View style={styles.header}>
-      <Text>
-      这里是header
-      </Text>
+      <Image
+      style={styles.headerPic}
+      source={{uri: headerPicUrl}}
+      resizeMode='cover'
+      />
       </View>
       <View style={styles.mainContent}>
-      <Text>
-      这里是content
-      </Text>
       </View>
       <View style={styles.footer}>
       <Text>
       这里是footer
       </Text>
       </View>
-    )
+      </View>
+    );
   },
 
   // fetchNews: function(isRefresh) {
@@ -120,34 +106,39 @@ var MainScreen = React.createClass({
   //   });
   // },
   //
-  // _renderHeader: function(
-  //   nav:object
-  // ) { // 这里是nav
-  //   return (
-  //     <View style={styles.container}>
-  //     <Image />
-  //     <ListView
-  //     onSelect = {() => this.selectNav(nav)}
-  //     nav={nav}
-  //     renderRow={this.renderNav}
-  //     />
-  //     </View>
-  //   );
-  // },
+  _renderHeader: function(
+    nav:object
+  ) { // 这里是nav
+    return (
+      // <View style={styles.listHeader}>
+      // <Image />
+      // <ListView
+      // onSelect = {() => this.selectNav(nav)}
+      // nav={nav}
+      // renderRow={this.renderNav}
+      // />
+      // </View>
+      <View style={styles.listHeader}>
+      <Text>
+      header
+      </Text>
+      </View>
+    );
+  },
   //
   // renderNav: function () {
   //
   // },
   //
-  // _renderFooter: function() { // 这里是底部
-  //   return (
-  //     <View style={styles.footerContainer}>
-  //     <Text>
-  //     这里是footer
-  //     </Text>
-  //     </View>
-  //   );
-  // },
+  _renderFooter: function() { // 这里是底部
+    return (
+      <View style={styles.listFooter}>
+      <Text>
+      这里是footer
+      </Text>
+      </View>
+    );
+  },
   //
   // contentMapper: function (route, navigationOperation, onComponentRef) {
   //   _navNavigator = navigationOperation;
@@ -189,28 +180,40 @@ var MainScreen = React.createClass({
   //   }
   // },
   //
-  // _renderRow: function() {
-  //   return (
-  //     <Navigator
-  //     style={styles.container}
-  //     initialRoute={{name: 'homeContent'}}
-  //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
-  //     renderScene={this.contentMapper}
-  //     />
-  //   );
-  // }
+  _renderRow: function() {
+    return (
+      // <Navigator
+      // style={styles.container}
+      // initialRoute={{name: 'homeContent'}}
+      // configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+      // renderScene={this.contentMapper}
+      // />
+      <View style={styles.row}>
+      <Text>
+      row
+      </Text>
+      </View>
+    );
+  }
 });
 
 var styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1
-  },
-  footer: {
-    flex: 1
+  screenContainer:{
+    flex: 1,
   },
   header: {
-    flex: 1
+    height: 40,
+  },
+  mainContent: {
+    flex: 1,
+  },
+  footer: {
+    height: 30,
+  },
+  headerPic:{
+    flex: 1,
+    height: 10
   }
-})
+});
 
 module.exports = MainScreen;
