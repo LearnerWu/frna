@@ -12,6 +12,7 @@ var {
   StyleSheet,
 } = React;
 
+var MainScreenTabbar = require('./MainScreenTabbar');
 // var HomeContent = require('./HomeContent');
 // var DynamicContent = require('./DynamicContent');
 // var ProductContent = require('./ProductContent');
@@ -74,6 +75,8 @@ var MainScreen = React.createClass({
       />
       </View>
       <View style={styles.mainContent}>
+      <MainScreenTabbar
+      />
       </View>
       <View style={styles.footer}>
       <Text>
