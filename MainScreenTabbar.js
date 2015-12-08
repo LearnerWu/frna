@@ -31,7 +31,7 @@ var TabBarCase = React.createClass({
 
   getInitialState: function() {
     return {
-      selectedTab: 'redTab',
+      selectedTab: 'home',
       notifCount: 0,
       presses: 0,
     };
@@ -41,7 +41,7 @@ var TabBarCase = React.createClass({
     switch (contentName) {
       case 'home':
       return (
-        <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
+        <View style={styles.tabContent}>
         <HomeContent />
         </View>
       );

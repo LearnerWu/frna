@@ -18,7 +18,7 @@ var HomeContent = React.createClass({
       rowHasChanged: (row1, row2) => row1 !== row2
     });
     return {
-      dataSource: ds.cloneWithRows(['row1', 'row2'])
+      dataSource: ds.cloneWithRows(['row1', 'row2', '11'])
     };
   },
   // componentDidmount: function () {
