@@ -16,7 +16,7 @@ var MainScreenTabbar = require('./MainScreenTabbar');
 // var HomeContent = require('./HomeContent');
 // var DynamicContent = require('./DynamicContent');
 // var ProductContent = require('./ProductContent');
-// var ExampleContent = require('./ExampleContent');
+// var CaseContent = require('./CaseContent');
 // var AboutContent = require('./AboutContent');
 // var DataRepository = require('./Repository');
 
@@ -75,8 +75,7 @@ var MainScreen = React.createClass({
       />
       </View>
       <View style={styles.mainContent}>
-      <MainScreenTabbar
-      />
+      <MainScreenTabbar/>
       </View>
       <View style={styles.footer}>
       <Text>
@@ -167,10 +166,10 @@ var MainScreen = React.createClass({
   //       </View>
   //     );
   //     break;
-  //     case 'exampleContent':
+  //     case 'caseContent':
   //     return (
   //       <View style={styles.contentWrapper}>
-  //       <ExampleContent navigator={navigationOperation}/>
+  //       <CaseContent navigator={navigationOperation}/>
   //       </View>
   //     );
   //     break;

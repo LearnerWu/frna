@@ -17,4 +17,6 @@ var AboutContent = React.createClass({
       </View>
     )
   }
-})
+});
+
+module.exports = AboutContent;

@@ -4,12 +4,16 @@ var {View, Text, ListView, Platform, TouchableHighlight, TouchableNativeFeedBack
 
 var DynamicContent = React.createClass({
   render: function () {
-    var TouchableElement = Platform.OS === 'android'
-    ? TouchableHighlight
-    : TouchableElement;
+    // var TouchableElement = Platform.OS === 'android'
+    // ? TouchableHighlight
+    // : TouchableElement;
     return (
-      <TouchableElement>
-      </TouchableElement>
+      // <View>
+      // <TouchableElement>
+      // </TouchableElement>
+      // </View>
+      <View>
+      </View>
     );
   }
 });

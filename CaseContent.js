@@ -9,16 +9,20 @@ var {
   TouchableNativeFeedBack,
 } = React;
 
-var ExampleContent = React.createClass({
+var CaseContent = React.createClass({
   render: function () {
+    // return (
+    //   <ListView
+    //   ref='caseContent'
+    //   renderRow={this._renderRow}
+    //   renderHeader={this._renderHeader}
+    //   renderFooter={this._renderFooter}
+    //   />
+    // );
     return (
-      <ListView
-      ref='exampleContent'
-      renderRow={this._renderRow}
-      renderHeader={this._renderHeader}
-      renderFooter={this._renderFooter}
-      />
-    );
+      <View>
+      </View>
+    )
   },
   _renderRow: function () {
     var TouchableElement = Platform.OS === 'android'
@@ -33,4 +37,4 @@ var ExampleContent = React.createClass({
   }
 });
 
-module.exports = ExampleContent;
+module.exports = CaseContent;
