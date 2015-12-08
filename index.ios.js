@@ -20,7 +20,7 @@ var reactNative = React.createClass({
   routeMapper: function (route, navigatorOperation, onComponentRef) {
     _ScreenNavigator = navigatorOperation;
     switch (route.name) {
-      case 'home':
+      case 'main':
       return (
         <View style={styles.container}>
         <MainScreen navigator={navigatorOperation}/>
@@ -45,7 +45,7 @@ var reactNative = React.createClass({
   },
 
   render: function() {
-    var initRoute = {name: 'home'};
+    var initRoute = {name: 'main'};
     return (
       <Navigator
         style={styles.container}
