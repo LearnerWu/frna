@@ -11,6 +11,32 @@ var {
   TouchableHighlight
 } = React;
 
+var cacheData = {
+  time: 1449631956715,
+  allNews: [
+    {
+      title: '这是第一个测试',
+      sectionID: 'product',
+      image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
+    },
+    {
+      title: '这是第二个测试',
+      sectionID: 'dynamic',
+      image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476'
+    },
+  ],
+  topNews:[
+    {
+      image:'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
+      title: '这是top_news的第一个测试'
+    },
+    {
+      image:'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
+      title: '这是top_news的第二个测试'
+    },
+  ]
+};
+
 
 var THUMB_URLS = [
   'Thumbnails/like.png',
@@ -25,7 +51,7 @@ var THUMB_URLS = [
   'Thumbnails/poke.png',
   'Thumbnails/superlike.png',
   'Thumbnails/victory.png',
-  ];
+];
 var LOREM_IPSUM = 'Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, vel an accusam intellegam interesset. Nam eu stet pericula reprimique, ea vim illud modus, putant invidunt reprehendunt ne qui.';
 var hashCode = function(str) {
   var hash = 15;
@@ -56,46 +82,56 @@ var HomeContent = React.createClass({
     this._pressData = {};
   },
 
+  _renderSectionHeader: function (sectionData: string, sectionID: number | string) {
+    return (
+      <Text style={styles.sectionHeader}>
+      {this.getSectionTitle(sectionID)}
+      </Text>
+    )
+  },
+
+  getSectionTitle: function (sectionID: number | string) {
+    switch (sectionID) {
+      case 'product':
+      return '产品';
+      break;
+      case 'dynamic':
+      return '动态';
+      break;
+    }
+  },
+
   render: function() {
     return (
       <View
-        title={this.props.navigator ? null : '<ListView> - Simple'}
-        noSpacer={true}
-        noScroll={true}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderRow}
-        />
+      title={this.props.navigator ? null : '<ListView> - Simple'}
+      noSpacer={true}
+      noScroll={true}>
+      <ListView
+      dataSource={this.state.dataSource}
+      renderSectionHeader={this._renderSectionHeader}
+      renderRow={this._renderRow}
+      />
       </View>
     );
   },
 
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    var rowHash = Math.abs(hashCode(rowData));
-    var imgSource = {
-      uri: THUMB_URLS[rowHash % THUMB_URLS.length],
-    };
     return (
-      <TouchableHighlight onPress={() => this._pressRow(rowID)}>
-        <View>
-          <View style={styles.row}>
-            <Image style={styles.thumb} source={imgSource} />
-            <Text style={styles.text}>
-              {rowData + ' - ' + LOREM_IPSUM.substr(0, rowHash % 301 + 10)}
-            </Text>
-          </View>
-          <View style={styles.separator} />
-        </View>
+      <TouchableHighlight style={styles.touchableElement} onPress={()=>this._pressRow(rowID, sectionID)}>
+      <View style={styles.row}>
+      <Image source={{uri: rowData.image}} style={styles.newsImage} />
+      <Text style={styles.text}>
+      {rowData.title}
+      </Text>
+      </View>
       </TouchableHighlight>
     );
   },
 
   _genRows: function(pressData: {[key: number]: boolean}): Array<string> {
     var dataBlob = [];
-    for (var i = 0; i < 100; i++) {
-      var pressedText = pressData[i] ? ' (pressed)' : '';
-      dataBlob.push('Row ' + i + pressedText);
-    }
+    dataBlob = cacheData.allNews;
     return dataBlob;
   },
 
@@ -108,9 +144,21 @@ var HomeContent = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  listView: {
+  touchableElement:{
     flex: 1
-  }
-})
+  },
+  sectionHeader:{
+    flex: 1,
+    backgroundColor: 'red'
+  },
+  row: {
+    justifyContent: 'center',
+    backgroundColor: '#F6F6F6',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#CCCCCC',
+  },
+});
 
 module.exports = HomeContent;
