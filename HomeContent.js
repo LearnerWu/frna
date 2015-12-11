@@ -14,7 +14,7 @@ var {
 
 var ViewPager = require('react-native-viewpager');
 var cacheData = {
-  allNews: [
+  product: [
     {
       title: '这是第一个测试',
       image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
@@ -75,17 +75,12 @@ var HomeContent = React.createClass({
       pageHasChanged: (p1, p2) => p1 !== p2
     });
 
-    // var dataSource = ds.cloneWithRowsAndSections(this._genRows(), this._getSectionIDs(), null);
+    var dataSource = ds.cloneWithRowsAndSections(this._genRows(), ['product'], null);
 
     return {
-      dataSource: ds.cloneWithRows(this._genRows()),
+      dataSource: dataSource,
       headerDataSource: headerDs.cloneWithPages(this.getHeaderData())
     };
-  },
-
-  _getSectionIDs: function () {
-    var testIDs = [1, 2];
-    return testIDs;
   },
 
   getHeaderData:function () {
@@ -108,10 +103,10 @@ var HomeContent = React.createClass({
 
   getSectionTitle: function (sectionID: number | string) {
     switch (sectionID) {
-      case 1:
+      case 'product':
       return '产品';
       break;
-      case 2:
+      case 'dynamic':
       return '动态';
       break;
     }
@@ -149,7 +144,6 @@ var HomeContent = React.createClass({
   render: function() {
     return (
       <View
-      title={this.props.navigator ? null : '<ListView> - Simple'}
       noSpacer={true}
       noScroll={true}>
       <ListView
@@ -164,7 +158,7 @@ var HomeContent = React.createClass({
 
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
     return (
-      <TouchableHighlight style={styles.touchableElement} onPress={()=>this._pressRow(rowID, sectionID)}>
+      <TouchableHighlight style={styles.touchableElement}>
       <View style={styles.row}>
       <Image source={{uri: rowData.image}} style={styles.newsImage} />
       <Text style={styles.text}>
@@ -177,7 +171,7 @@ var HomeContent = React.createClass({
 
   _genRows: function(pressData: {[key: number]: boolean}): Array<string> {
     var dataBlob = [];
-    dataBlob = cacheData.allNews;
+    dataBlob = cacheData;
     return dataBlob;
   },
 
