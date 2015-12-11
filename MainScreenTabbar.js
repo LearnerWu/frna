@@ -158,7 +158,6 @@ var TabBarCase = React.createClass({
 var styles = StyleSheet.create({
   tabContent: {
     flex: 1,
-    alignItems: 'center',
   },
   tabText: {
     color: 'white',

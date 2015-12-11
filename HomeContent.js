@@ -24,6 +24,14 @@ var cacheData = {
       image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476'
     },
   ],
+  dynamic:[
+    {
+      title: '这是第一个测试',
+    },
+    {
+      title: '这是第二个测试',
+    },
+  ],
   topNews:[
     {
       image:'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
@@ -35,23 +43,6 @@ var cacheData = {
     },
   ]
 };
-
-
-var THUMB_URLS = [
-  'Thumbnails/like.png',
-  'Thumbnails/dislike.png',
-  'Thumbnails/call.png',
-  'Thumbnails/fist.png',
-  'Thumbnails/bandaged.png',
-  'Thumbnails/flowers.png',
-  'Thumbnails/heart.png',
-  'Thumbnails/liking.png',
-  'Thumbnails/party.png',
-  'Thumbnails/poke.png',
-  'Thumbnails/superlike.png',
-  'Thumbnails/victory.png',
-];
-var LOREM_IPSUM = 'Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, vel an accusam intellegam interesset. Nam eu stet pericula reprimique, ea vim illud modus, putant invidunt reprehendunt ne qui.';
 var hashCode = function(str) {
   var hash = 15;
   for (var i = str.length - 1; i >= 0; i--) {
@@ -75,7 +66,7 @@ var HomeContent = React.createClass({
       pageHasChanged: (p1, p2) => p1 !== p2
     });
 
-    var dataSource = ds.cloneWithRowsAndSections(this._genRows(), ['product'], null);
+    var dataSource = ds.cloneWithRowsAndSections(this._genRows(), ['product', 'dynamic'], null);
 
     return {
       dataSource: dataSource,
@@ -130,12 +121,14 @@ var HomeContent = React.createClass({
     return (
       <TouchableOpacity style={styles.page}>
       <Image
-        source={{uri: news.image}}
-        style={styles.headerImage}
+      source={{uri: 'http://c.hiphotos.baidu.com/zhidao/pic/item/b151f8198618367a48b031d22e738bd4b31ce580.jpg'}}
+      style={styles.headerImage}
       >
+      <View style={styles.pageTextContainer}>
       <Text>
       {news.title}
       </Text>
+      </View>
       </Image>
       </TouchableOpacity>
     )
@@ -145,7 +138,9 @@ var HomeContent = React.createClass({
     return (
       <View
       noSpacer={true}
-      noScroll={true}>
+      noScroll={true}
+      style={styles.mainScreen}
+      >
       <ListView
       dataSource={this.state.dataSource}
       renderSectionHeader={this._renderSectionHeader}
@@ -158,10 +153,10 @@ var HomeContent = React.createClass({
 
   _renderRow: function(rowData: string, sectionID: number, rowID: number) {
     return (
-      <TouchableHighlight style={styles.touchableElement}>
+      <TouchableHighlight onPress={() => this._pressRow(sectionID, rowID)}>
       <View style={styles.row}>
-      <Image source={{uri: rowData.image}} style={styles.newsImage} />
-      <Text style={styles.text}>
+      <Image source={require('./images/home.png')} style={styles.newsImage} />
+      <Text>
       {rowData.title}
       </Text>
       </View>
@@ -175,39 +170,36 @@ var HomeContent = React.createClass({
     return dataBlob;
   },
 
-  _pressRow: function(rowID: number) {
-    this._pressData[rowID] = !this._pressData[rowID];
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(
-      this._genRows(this._pressData)
-    )});
+  _pressRow: function(sectionID: string, rowID: number) {
+    var data = cache[sectionID[rowID]];
+    this.props.navigator.push({
+      title: data.title
+    })
   },
 });
 
 var styles = StyleSheet.create({
-  touchableElement:{
-    flex: 1
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    backgroundColor: 'rgb(241, 241, 241)',
   },
   sectionHeader:{
-    flex: 1,
-  },
-  row: {
-    justifyContent: 'center',
-    flex: 1,
-    backgroundColor: '#F6F6F6',
-  },
-  newsImage:{
-    width: 20
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#CCCCCC',
-  },
-  header: {
-    flex: 1,
-    height: 300
+    backgroundColor: 'rgb(211, 214, 201)'
   },
   page: {
+    flex: 1,
+    height: 300,
     justifyContent: 'center'
+  },
+  headerImage:{
+    flex: 1,
+    flexDirection: 'row'
+  },
+  pageTextContainer: {
+    flex: 1,
+    alignSelf: 'center'
   }
 });
 
