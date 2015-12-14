@@ -40,39 +40,39 @@ var TabBarCase = React.createClass({
   _renderContent: function(contentName: string, timeNow?: number) {
     switch (contentName) {
       case 'home':
-      return (
-        <View style={styles.tabContent}>
-        <HomeContent />
-        </View>
-      );
+        return (
+          <View style={styles.tabContent}>
+                  <HomeContent />
+                  </View>
+        );
       break;
       case 'dynamic':
-      return (
-        <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
-        <DynamicContent />
-        </View>
-      )
+        return (
+          <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
+                  <DynamicContent />
+                  </View>
+        );
       break;
       case 'case':
-      return (
-        <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
-        <CaseContent />
-        </View>
-      )
+        return (
+          <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
+                  <CaseContent />
+                  </View>
+        );
       break;
       case 'about':
-      return (
-        <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
-        <AboutContent />
-        </View>
-      )
+        return (
+          <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
+                  <AboutContent />
+                  </View>
+        );
       break;
       case 'product':
-      return (
-        <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
-        <ProductContent />
-        </View>
-      )
+        return (
+          <View style={[styles.tabContent, {backgroundColor: 'red'}]}>
+                  <ProductContent />
+                  </View>
+        );
       break;
     };
   },
@@ -81,11 +81,11 @@ var TabBarCase = React.createClass({
     var timeNow = new Date().getTime();
     return (
       <TabBarIOS
-      tintColor="black"
-      barTintColor="white"
+      tintColor='black'
+      barTintColor='white'
       >
       <TabBarIOS.Item
-      title="首页"
+      title='首页'
       icon={require('./images/home.png')}
       selectedIcon={require('./images/home.png')}
       selected={this.state.selectedTab === 'home'}
@@ -99,7 +99,7 @@ var TabBarCase = React.createClass({
       <TabBarIOS.Item
       icon={require('./images/home.png')}
       selectedIcon={require('./images/home.png')}
-      title="动态"
+      title='动态'
       badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
       selected={this.state.selectedTab === 'dynamic'}
       onPress={() => {
@@ -113,12 +113,12 @@ var TabBarCase = React.createClass({
       <TabBarIOS.Item
       icon={require('./images/home.png')}
       selectedIcon={require('./images/home.png')}
-      title="产品"
+      title='产品'
       selected={this.state.selectedTab === 'product'}
       onPress={() => {
         this.setState({
           selectedTab: 'product',
-          presses: this.state.presses + 1
+          presses: this.state.presses + 1,
         });
       }}>
       {this._renderContent('product', timeNow)}
@@ -126,12 +126,12 @@ var TabBarCase = React.createClass({
       <TabBarIOS.Item
       icon={require('./images/home.png')}
       selectedIcon={require('./images/home.png')}
-      title="案例"
+      title='案例'
       selected={this.state.selectedTab === 'case'}
       onPress={() => {
         this.setState({
           selectedTab: 'case',
-          presses: this.state.presses + 1
+          presses: this.state.presses + 1,
         });
       }}>
       {this._renderContent('case', timeNow)}
@@ -139,12 +139,12 @@ var TabBarCase = React.createClass({
       <TabBarIOS.Item
       icon={require('./images/home.png')}
       selectedIcon={require('./images/home.png')}
-      title="关于"
+      title='关于'
       selected={this.state.selectedTab === 'about'}
       onPress={() => {
         this.setState({
           selectedTab: 'about',
-          presses: this.state.presses + 1
+          presses: this.state.presses + 1,
         });
       }}>
       {this._renderContent('about', timeNow)}
@@ -164,8 +164,8 @@ var styles = StyleSheet.create({
     margin: 50,
   },
   tabBarItem: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 module.exports = TabBarCase;

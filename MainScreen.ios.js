@@ -14,7 +14,7 @@ var {
 
 var MainScreenTabbar = require('./MainScreenTabbar');
 
-var headerPicUrl='http://facebook.github.io/react/img/logo_og.png';
+var headerPicUrl = 'http://facebook.github.io/react/img/logo_og.png';
 var MainScreen = React.createClass({
   getInitialState: function() {
     return null;
@@ -38,7 +38,7 @@ var MainScreen = React.createClass({
       </View>
       </View>
     );
-  }
+  },
 });
 var styles = StyleSheet.create({
   screenContainer:{
@@ -52,11 +52,12 @@ var styles = StyleSheet.create({
   },
   footer: {
     height: 30,
+    justifyContent: 'center',
   },
   headerPic:{
     flex: 1,
-    height: 10
-  }
+    height: 10,
+  },
 });
 
 module.exports = MainScreen;

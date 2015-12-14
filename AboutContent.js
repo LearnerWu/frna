@@ -8,15 +8,16 @@ var {
 } = React;
 
 var AboutContent = React.createClass({
-  getInitialState: function () {
+  getInitialState: function() {
     return {};
   },
-  render: function () {
+
+  render: function() {
     return (
       <View>
       </View>
-    )
-  }
+    );
+  },
 });
 
 module.exports = AboutContent;

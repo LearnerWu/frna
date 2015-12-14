@@ -1,102 +1,67 @@
 var React = require('react-native');
+
 var {
   AsyncStorage,
-  PickerIOS,
-  Text,
-  View
 } = React;
-var PickerItemIOS = PickerIOS.Item;
 
-var STORAGE_KEY = '@AsyncStorageExample:key';
-var COLORS = ['red', 'orange', 'yellow', 'green', 'blue'];
+var API_NEWS_URL = 'http://localhost:8888';
+var KEY_NEWS = '@news';
 
-var newsStorage = React.createClass({
-  componentDidMount() {
-    this._loadInitialState().done();
-  },
+function DataRepository() {
+  if (typeof DataRepository.instance === 'object') {
+    return DataRepository.instance;
+  }
 
-  async _loadInitialState() {
-    try {
-      var value = await AsyncStorage.getItem(STORAGE_KEY);
-      if (value !== null){
-        this.setState({selectedValue: value});
-        this._appendMessage('Recovered selection from disk: ' + value);
-      } else {
-        this._appendMessage('Initialized with no selection on disk.');
+  DataRepository.instance = this;
+};
+
+DataRepository.prototype._fetch = function(reqUrl : string) {
+  return new Promise((resolve, reject) => {
+    fetch(reqUrl)
+    .then((response) => response.json())
+    .then((responseData) => {
+      resolve(responseData);
+    }).catch((err) => {
+      console.log(err);
+      resolve(null);
+    });
+  });
+};
+
+DataRepository.prototype._store = function(key: string) {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem(key, (error, result) => {
+      var retData = JSON.parse(result);
+      !!error ? resolve(null) : resolve(retData);
+    });
+  });
+};
+
+DataRepository.prototype._formateTime = function(date) {
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDay();
+  var date = date.getDate();
+  return '' + year + month + day + date;
+};
+
+DataRepository.prototype.fetchNews = function(date?: Date,
+  callback?: ?(error: ?Error, result: ?Object) => void) {
+  var reqUrl = null;
+  var date = date || new Date();
+  var formatedDate = this._formateTime(date);
+  var localStorage = this._store(KEY_NEWS + formatedDate);
+  var netWork = this._fetch(API_NEWS_URL);
+  var mergedPromise = new Promise((resolve, reject) => {
+    Promise.all([localStorage, netWork])
+    .then((values: array) => {
+      if (values) {
+        callback && callback(values);
+        resolve(values);
+      }else {
+        var error = new Error('storage error');
+        reject(error);
       }
-    } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
-    }
-  },
-
-  getInitialState() {
-    return {
-      selectedValue: COLORS[0],
-      messages: [],
-    };
-  },
-
-  render() {
-    var color = this.state.selectedValue;
-    return (
-      <View>
-        <PickerIOS
-          selectedValue={color}
-          onValueChange={this._onValueChange}>
-          {COLORS.map((value) => (
-            <PickerItemIOS
-              key={value}
-              value={value}
-              label={value}
-            />
-          ))}
-        </PickerIOS>
-        <Text>
-          {'Selected: '}
-          <Text style={{color}}>
-            {this.state.selectedValue}
-          </Text>
-        </Text>
-        <Text>{' '}</Text>
-        <Text onPress={this._removeStorage}>
-          Press here to remove from storage.
-        </Text>
-        <Text>{' '}</Text>
-        <Text>Messages:</Text>
-        {this.state.messages.map((m) => <Text>{m}</Text>)}
-      </View>
-    );
-  },
-
-  async _onValueChange(selectedValue) {
-    this.setState({selectedValue});
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, selectedValue);
-      this._appendMessage('Saved selection to disk: ' + selectedValue);
-    } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
-    }
-  },
-
-  async _removeStorage() {
-    try {
-      await AsyncStorage.removeItem(STORAGE_KEY);
-      this._appendMessage('Selection removed from disk.');
-    } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
-    }
-  },
-
-  _appendMessage(message) {
-    this.setState({messages: this.state.messages.concat(message)});
-  },
-});
-
-exports.title = 'AsyncStorage';
-exports.description = 'Asynchronous local disk storage.';
-exports.examples = [
-  {
-    title: 'Basics - getItem, setItem, removeItem',
-    render(): ReactElement { return <BasicStorageExample />; }
-  },
-];
+    });
+  });
+};

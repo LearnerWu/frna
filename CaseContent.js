@@ -10,7 +10,7 @@ var {
 } = React;
 
 var CaseContent = React.createClass({
-  render: function () {
+  render: function() {
     // return (
     //   <ListView
     //   ref='caseContent'
@@ -22,9 +22,10 @@ var CaseContent = React.createClass({
     return (
       <View>
       </View>
-    )
+    );
   },
-  _renderRow: function () {
+
+  _renderRow: function() {
     var TouchableElement = Platform.OS === 'android'
     ? TouchableNativeFeedBack
     : TouchableHighlight;
@@ -34,7 +35,7 @@ var CaseContent = React.createClass({
       >
       </TouchableElement>
     );
-  }
+  },
 });
 
 module.exports = CaseContent;

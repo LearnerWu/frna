@@ -3,16 +3,16 @@ var React = require('react-native');
 var {
   Text,
   View,
-  ListView
+  ListView,
 } = React;
 
 var ProductContent = React.createClass({
-  render: function () {
+  render: function() {
     return (
       <View>
       </View>
-    )
-  }
+    );
+  },
 });
 
 module.exports = ProductContent;

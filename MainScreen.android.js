@@ -2,13 +2,13 @@
 
 var React = require('react-native');
 
-var (
+var {
   View,
   Text,
   AsyncStorage,
   ListView,
-  Image
-) = React;
+  Image,
+} = React;
 
 var Nav = require('./Nav');
 var ViewPager = require('react-native-viewpager');
