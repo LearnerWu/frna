@@ -22,13 +22,6 @@ var icon = {
 };
 
 var TabBarCase = React.createClass({
-  statics: {
-    title: '<TabBarIOS>',
-    description: 'Tab-based navigation.',
-  },
-
-  displayName: 'homeScreenTabBar',
-
   getInitialState: function() {
     return {
       selectedTab: 'home',

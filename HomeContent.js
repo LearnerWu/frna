@@ -50,11 +50,6 @@ var cacheData;
 var dataRepository = new DataRepository();
 
 var HomeContent = React.createClass({
-  statics: {
-    title: '<ListView> - Simple',
-    description: 'Performant, scrollable list of data.',
-  },
-
   getInitialState: function() {
     var ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
