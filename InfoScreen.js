@@ -18,6 +18,13 @@ var InfoScreen = React.createClass({
   render: function() {
     return (
       <View>
+        <View style={styles.headerImg}>
+        <Image
+          source={{uri: headerPicUrl}}
+          style={styles.topImage}
+          resizeMode='cover'
+          />
+        </View>
         <Text>
           fjdklas
         </Text>
@@ -29,6 +36,9 @@ var InfoScreen = React.createClass({
 var styles = StyleSheet.create({
   topImage: {
     flex: 1,
+  },
+  headerImg:{
+    height: 30,
   },
 });
 
