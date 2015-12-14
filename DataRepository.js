@@ -4,7 +4,7 @@ var {
   AsyncStorage,
 } = React;
 
-var API_NEWS_URL = 'http://localhost:8888';
+var API_NEWS_URL = 'http://localhost:8888/';
 var KEY_NEWS = '@news';
 
 function DataRepository() {
@@ -18,13 +18,14 @@ function DataRepository() {
 DataRepository.prototype._fetch = function(reqUrl : string) {
   return new Promise((resolve, reject) => {
     fetch(reqUrl)
-    .then((response) => response.json())
-    .then((responseData) => {
-      resolve(responseData);
-    }).catch((err) => {
-      console.log(err);
-      resolve(null);
-    });
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((err) => {
+        console.log(err);
+        reject(err);
+      });
   });
 };
 
@@ -56,12 +57,38 @@ DataRepository.prototype.fetchNews = function(date?: Date,
     Promise.all([localStorage, netWork])
     .then((values: array) => {
       if (values) {
+        var result = this._mergeReadState(values[0], values[1]);
         callback && callback(values);
-        resolve(values);
+        resolve(result);
       }else {
         var error = new Error('storage error');
         reject(error);
       }
     });
   });
+  return mergedPromise;
 };
+
+DataRepository.prototype._mergeReadState = function(localData, serverData) {
+  if (serverData) {
+    if (localData) {
+      var readedNewsId = {};
+      localData.dynamic.forEach(function(news) {
+      readedNewsId[news.id] = news.read;
+    });
+
+      for (var i = serverData.dynamic.length - 1; i > -1; i--) {
+        var news = serverData.dynamic[i];
+        if (readedNewsId[news.id]) {
+          news.read = true;
+        }
+      };
+    }
+
+    return serverData;
+  }else {
+    return localData || null;
+  }
+};
+
+module.exports = DataRepository;

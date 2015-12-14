@@ -13,36 +13,42 @@ var {
 } = React;
 
 var ViewPager = require('react-native-viewpager');
-var cacheData = {
-  product: [
-    {
-      title: '这是第一个测试',
-      image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
-    },
-    {
-      title: '这是第二个测试',
-      image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
-    },
-  ],
-  dynamic:[
-    {
-      title: '这是第一个测试',
-    },
-    {
-      title: '这是第二个测试',
-    },
-  ],
-  topNews:[
-    {
-      image: 'http://img4.tgbusdata.cn/v2/thumb/jpg/MDYzZSw3MDAsMTAwLDQsMywxLC0xLDEs/u/shouji.tgbus.com/uploads/allimg/1408/26/3170-140R61H958.jpg',
-      title: '这是top_news的第一个测试',
-    },
-    {
-      image:'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
-      title: '这是top_news的第二个测试',
-    },
-  ],
-};
+var DataRepository = require('./DataRepository');
+var cacheData;
+
+// var cacheData = {
+//   product: [
+//     {
+//       title: '这是第一个测试',
+//       image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
+//     },
+//     {
+//       title: '这是第二个测试',
+//       image: 'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
+//     },
+//   ],
+//   dynamic:[
+//     {
+//       title: '这是第一个测试',
+//     },
+//     {
+//       title: '这是第二个测试',
+//     },
+//   ],
+//   topNews:[
+//     {
+//       image: 'http://img4.tgbusdata.cn/v2/thumb/jpg/MDYzZSw3MDAsMTAwLDQsMywxLC0xLDEs/u/shouji.tgbus.com/uploads/allimg/1408/26/3170-140R61H958.jpg',
+//       title: '这是top_news的第一个测试',
+//     },
+//     {
+//       image:'http://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwj22d_Mo8HJAhUmLKYKHd0yBUYQjRwIBw&url=https%3A%2F%2Fwww.iconfinder.com%2Fsearch%2F%3Fq%3Dhome&psig=AFQjCNFQlbSKlv6Bq11BR9nBTQo1PxGGew&ust=1449286636891476',
+//       title: '这是top_news的第二个测试',
+//     },
+//   ],
+// };
+
+var dataRepository = new DataRepository();
+
 var HomeContent = React.createClass({
   statics: {
     title: '<ListView> - Simple',
@@ -59,12 +65,23 @@ var HomeContent = React.createClass({
       pageHasChanged: (p1, p2) => p1 !== p2,
     });
 
-    var dataSource = ds.cloneWithRowsAndSections(this._genRows(), ['product', 'dynamic'], null);
-
     return {
-      dataSource: dataSource,
-      headerDataSource: headerDs.cloneWithPages(this.getHeaderData()),
+      dataSource: ds,
+      headerDataSource: headerDs,
     };
+  },
+
+  componentDidMount: function() {
+    var dataSource = null;
+    dataRepository.fetchNews()
+    .then((responseData) => {
+      cacheData = responseData;
+      dataSource = this.state.dataSource.cloneWithRowsAndSections(this._genRows(), ['product', 'dynamic'], null);
+      this.setState({
+        dataSource: dataSource,
+        headerDataSource: this.state.headerDataSource.cloneWithPages(this.getHeaderData()),
+      });
+    });
   },
 
   getHeaderData:function() {
