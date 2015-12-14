@@ -175,18 +175,16 @@ var HomeContent = React.createClass({
   },
 
   _pressRow: function(sectionID: string, rowID: number) {
-    var data = cache[sectionID[rowID]];
+    var data = cacheData[sectionID[rowID]];
     switch (sectionID) {
       case 'dynamic':
         this.props.navigator.push({
-        title: data.title,
         name: 'info',
         content: data,
       });
       break;
       case 'product':
         this.props.navigator.push({
-        title: data.title,
         name: 'main',
         content: data,
       });

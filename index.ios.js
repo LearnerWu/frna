@@ -14,7 +14,8 @@ var {
 var _ScreenNavigator;
 var MainScreen = require('./MainScreen');
 
-// var InfoScreen = require('./InfoScreen');
+var InfoScreen = require('./InfoScreen');
+
 // var TryScreen = require('./TryScreen');
 
 var reactNative = React.createClass({
@@ -25,21 +26,21 @@ var reactNative = React.createClass({
       case 'main':
         return (
           <View style={styles.container}>
-                  <MainScreen navigator={navigatorOperation}/>
+                  <MainScreen navigator={navigatorOperation} />
                   </View>
         );
       break;
       case 'info':
         return (
           <View style={styles.container}>
-                  <InfoScreen navigator={navigatorOperation}/>
+                  <InfoScreen navigator={navigatorOperation} />
                   </View>
         );
       break;
       case 'try':
         return (
           <View style={styles.container}>
-                  <TryScreen navigator={navigatorOperation}/>
+                  <TryScreen navigator={navigatorOperation} />
                   </View>
         );
       break;

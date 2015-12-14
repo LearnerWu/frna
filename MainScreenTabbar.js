@@ -35,7 +35,7 @@ var TabBarCase = React.createClass({
       case 'home':
         return (
           <View style={styles.tabContent}>
-                  <HomeContent />
+                  <HomeContent navigator={this.props.navigator}/>
                   </View>
         );
       break;

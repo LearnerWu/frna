@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start-react": "react-native start",
-    "start-node": "node --harmony ./node/test.js"
+    "startNode": "node --harmony ./node/test.js"
   },
   "dependencies": {
     "koa": "^1.1.2",

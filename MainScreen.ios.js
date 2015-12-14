@@ -30,7 +30,7 @@ var MainScreen = React.createClass({
       resizeMode='cover'
       />
       </View>
-      <MainScreenTabbar/>
+      <MainScreenTabbar navigator={this.props.navigator}/>
       <View style={styles.footer}>
       <Text>
       这里是footer
