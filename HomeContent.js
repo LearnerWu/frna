@@ -74,19 +74,9 @@ var HomeContent = React.createClass({
       dataSource = this.state.dataSource.cloneWithRowsAndSections(this._genRows(), ['product', 'dynamic'], null);
       this.setState({
         dataSource: dataSource,
-        headerDataSource: this.state.headerDataSource.cloneWithPages(this.getHeaderData()),
+        headerDataSource: this.state.headerDataSource.cloneWithPages(responseData.topNews),
       });
     });
-  },
-
-  getHeaderData:function() {
-    return cacheData.topNews;
-  },
-
-  _pressData: ({}: {[key: number]: boolean}),
-
-  componentWillMount: function() {
-    this._pressData = {};
   },
 
   _renderSectionHeader: function(sectionData: string, sectionID: number | string) {
@@ -123,6 +113,7 @@ var HomeContent = React.createClass({
 
   _renderPage:function(news: object, pageID: number | string) {
     return (
+
       <TouchableOpacity style={styles.page}>
       <Image
       source={{uri: news.image}}
@@ -134,6 +125,7 @@ var HomeContent = React.createClass({
       </Text>
       </View>
       </Image>
+
       </TouchableOpacity>
     );
   },
@@ -149,6 +141,10 @@ var HomeContent = React.createClass({
       dataSource={this.state.dataSource}
       renderSectionHeader={this._renderSectionHeader}
       renderRow={this._renderRow}
+      automaticallyAdjustContentInsets={false}
+      keyboardDismissMode='on-drag'
+      keyboardShouldPersistTaps={true}
+      showsVerticalScrollIndicator={false}
       renderHeader={this._renderHeader}
       />
       </View>
@@ -210,7 +206,6 @@ var styles = StyleSheet.create({
   },
   headerImage:{
     flex: 1,
-    flexDirection: 'row',
   },
   pageTextContainer: {
     flex: 1,
