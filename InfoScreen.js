@@ -26,7 +26,7 @@ var InfoScreen = React.createClass({
           />
         </View>
         <Text>
-          fjdklas
+          这里是新闻内容
         </Text>
       </View>
     );

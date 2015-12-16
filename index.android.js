@@ -7,35 +7,40 @@ var {
   Text,
   View,
   Navigator,
+
+  // NavigatorIOS
 } = React;
 
-var _navigator;
+var _ScreenNavigator;
 var MainScreen = require('./MainScreen');
+
 var InfoScreen = require('./InfoScreen');
-var TryScreen = require('./TryScreen');
+
+// var TryScreen = require('./TryScreen');
 
 var reactNative = React.createClass({
 
-  routeMapper: function(route, Navigator) {
-    switch (route) {
-      case 'home':
+  routeMapper: function(route, navigatorOperation, onComponentRef) {
+    _ScreenNavigator = navigatorOperation;
+    switch (route.name) {
+      case 'main':
         return (
           <View style={styles.container}>
-                  <MainScreen navigator={Navigator}/>
+                  <MainScreen navigator={navigatorOperation} />
                   </View>
         );
       break;
       case 'info':
         return (
           <View style={styles.container}>
-                  <InfoScreen navigator={Navigator}/>
+                  <InfoScreen navigator={navigatorOperation} />
                   </View>
         );
       break;
       case 'try':
         return (
           <View style={styles.container}>
-                  <TryScreen navigator={Navigator}/>
+                  <TryScreen navigator={navigatorOperation} />
                   </View>
         );
       break;
@@ -43,11 +48,11 @@ var reactNative = React.createClass({
   },
 
   render: function() {
-    var initRoute = {name: 'home'};
+    var initRoute = {name: 'main'};
     return (
       <Navigator
         style={styles.container}
-        initialRoute={initialRoute}
+        initialRoute={initRoute}
         configureScene={()=>Navigator.SceneConfigs.FadeAndroid}
         renderScene={this.routeMapper}
        />

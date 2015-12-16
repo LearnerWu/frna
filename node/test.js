@@ -25,17 +25,17 @@ var testData = {
   ],
   topNews:[
     {
-      image: 'http://img4.tgbusdata.cn/v2/thumb/jpg/MDYzZSw3MDAsMTAwLDQsMywxLC0xLDEs/u/shouji.tgbus.com/uploads/allimg/1408/26/3170-140R61H958.jpg',
+      image: 'http://img2.3lian.com/2014/f5/158/d/87.jpg',
       title: '这是top_news的第一个测试',
       id: 7571008,
     },
     {
-      image:'http://facebook.github.io/react/img/logo_og.png',
+      image:'http://img2.3lian.com/2014/f5/158/d/87.jpg',
       title: '这是top_news的第二个测试',
       id: 2,
     },
     {
-      image:'http://facebook.github.io/react/img/logo_og.png',
+      image:'http://img2.3lian.com/2014/f5/158/d/87.jpg',
       title: '这是top_news的第三个测试',
       id: 3,
     },
